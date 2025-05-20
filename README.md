@@ -18,40 +18,53 @@ This project extracts, summarizes, and translates Mongabay articles using Beauti
 
 1. Clone the Repository
 
+```
 git clone https://github.com/your-username/story-transformer.git
 cd story-transformer
+```
 
 2. Pull the Latest Changes
 
+```
 git pull origin main
+```
 
 3. Create & Activate a Virtual Environment
 
 Windows (Git Bash):
 
+```
 python -m venv venv
 source venv/Scripts/activate
+```
 
 Windows (Command Prompt):
 
+```
 python -m venv venv
 venv\Scripts\activate
+```
 
 Mac/Linux:
 
+```
 python3 -m venv venv
 source venv/bin/activate
+```
 
 4. Install Dependencies
 
+```
 pip install -r requirements.txt
+```
 
 5. Add API Keys
 
 Create a .env file in the project root with:
 
+```
 OPENAI_API_KEY="your_api_key_here"
-
+```
 
 
 ⸻
@@ -64,20 +77,28 @@ Before each session:
 
 Windows (Git Bash):
 
+```
 source venv/Scripts/activate
+```
 
 Windows (Command Prompt):
 
+```
 venv\Scripts\activate
+```
 
 Mac/Linux:
 
+```
 source venv/bin/activate
+```
 
 2. Launch the App
 
+```
 cd api
 streamlit run app.py
+```
 
 Then open http://localhost:8501 in your browser.
 
