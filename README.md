@@ -1,20 +1,20 @@
-## [DSS x Mongabay] Story Transformer Technical Reference Guide
+# [DSS x Mongabay] Story Transformer Technical Reference Guide
 
-🚀 Project Overview
+## 🚀 Project Overview
 
 This project extracts, summarizes, and translates Mongabay articles using BeautifulSoup and OpenAI’s GPT-4.
 
 ⸻
 
-📌 Features
-	•	🔍 Extract content from Mongabay articles using BeautifulSoup and regex
-	•	✏️ Simplify and summarize articles with GPT-4
-	•	🌍 Translate articles into multiple languages
-	•	📡 Serve processed content via a Streamlit-powered interface
+## 📌 Features
+- 🔍 Extract content from Mongabay articles using BeautifulSoup and regex
+- ✏️ Simplify and summarize articles with GPT-4
+- 🌍 Translate articles into multiple languages
+- 📡 Serve processed content via a Streamlit-powered interface
 
 ⸻
 
-🛠️ Setup Instructions
+## 🛠️ Setup Instructions
 
 1. Clone the Repository
 
@@ -69,7 +69,7 @@ OPENAI_API_KEY="your_api_key_here"
 
 ⸻
 
-▶️ Running Instructions
+## ▶️ Running Instructions
 
 1. Activate Your Virtual Environment
 
@@ -105,17 +105,17 @@ Then open http://localhost:8501 in your browser.
 ⸻
 
 🌍 Translate a Mongabay Article
-	1.	Upload a Mongabay article URL (in English)
-	2.	Select your desired language from the dropdown
-	3.	Click Translate
-	4.	Click Download Translation (.pdf) to save the result
+1. Upload a Mongabay article URL (in English)
+2. Select your desired language from the dropdown
+3. Click Translate
+4. Click Download Translation (.pdf) to save the result
 
 ⸻
 
 📝 Summarize a Text Article
-	1.	Upload a Mongabay article URL
-	2.	Choose your desired word count and summary language
-	3.	Click Summarize
-	4.	Click Download Summary (.pdf) to save it
+1. Upload a Mongabay article URL
+2. Choose your desired word count and summary language
+3. Click Summarize
+4. Click Download Summary (.pdf) to save it
 
 ⸻
