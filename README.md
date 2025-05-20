@@ -1,4 +1,4 @@
-[DSS x Mongabay] Story Transformer Technical Reference Guide
+## [DSS x Mongabay] Story Transformer Technical Reference Guide
 
 🚀 Project Overview
 
