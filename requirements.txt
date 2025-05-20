@@ -1,0 +1,8 @@
+streamlit
+openai
+fpdf2>=2.5.2
+pypdf
+beautifulsoup4
+requests
+python-dotenv
+regex
