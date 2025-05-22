@@ -6,6 +6,7 @@ from fpdf import FPDF
 from io import BytesIO
 import unicodedata, re
 from fpdf.enums import XPos, YPos
+from PIL import Image
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -101,6 +102,10 @@ def create_pdf(text):
         fallback_output.seek(0)
         return fallback_output
 
+logo_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "assets", "logo.png"))
+
+logo = Image.open(logo_path)
+st.image(logo)
 
 st.title("Story Transformer")
 
