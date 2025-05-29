@@ -2,7 +2,7 @@ import streamlit as st
 import sys
 import os
 import traceback
-from fpdf import FPDF
+from fpdf2 import FPDF
 from io import BytesIO
 import unicodedata, re
 from fpdf.enums import XPos, YPos
