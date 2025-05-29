@@ -19,8 +19,8 @@ This project extracts, summarizes, and translates Mongabay articles using Beauti
 1. Clone the Repository
 
 ```
-git clone https://github.com/your-username/story-transformer.git
-cd story-transformer
+git clone https://github.com/kar722/Story-Transformer.git
+cd Story-Transformer
 ```
 
 2. Pull the Latest Changes
