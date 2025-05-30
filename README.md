@@ -19,8 +19,8 @@ This project extracts, summarizes, and translates Mongabay articles using Beauti
 1. Clone the Repository
 
 ```
-git clone https://github.com/your-username/story-transformer.git
-cd story-transformer
+git clone https://github.com/kar722/Story-Transformer.git
+cd Story-Transformer
 ```
 
 2. Pull the Latest Changes
@@ -63,7 +63,7 @@ pip install -r requirements.txt
 Create a .env file in the project root with:
 
 ```
-OPENAI_API_KEY="your_api_key_here"
+echo OPENAI_API_KEY="your_api_key_here" > .env
 ```
 
 
