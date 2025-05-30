@@ -109,6 +109,13 @@ st.image(logo)
 
 st.title("Story Transformer")
 
+st.sidebar.title("🔑 API Access")
+user_api_key = st.sidebar.text_input("Enter your OpenAI API Key:", type="password")
+
+if not user_api_key:
+    st.warning("Please enter your OpenAI API key in the sidebar to continue.")
+    st.stop()
+
 mode = st.radio("Choose what you'd like to do:", ["Summarize", "Translate"])
 
 tab1, tab2 = st.tabs(["Upload .txt", "Enter Article URL"])
@@ -149,9 +156,9 @@ with tab1:
             with st.spinner(f"{mode}ing..."):
                 try:
                     if mode == "Summarize":
-                        output = summarize_and_translate(article_text, word_limit, language)
+                        output = summarize_and_translate(article_text, word_limit, language, api_key=user_api_key)
                     else:
-                        output = translate_structured_text(article_text, language)
+                        output = translate_structured_text(article_text, language, api_key=user_api_key)
 
                     st.subheader("Output")
                     st.write(output)
@@ -185,9 +192,9 @@ with tab2:
                 st.text_area("Extracted Text", article_text, height=400)
 
                 if mode == "Summarize":
-                    output = summarize_and_translate(article_text, word_limit, language)
+                    output = summarize_and_translate(article_text, word_limit, language, api_key=user_api_key)
                 else:
-                    output = translate_structured_text(article_text, language)
+                    output = translate_structured_text(article_text, language, api_key=user_api_key)
 
                 st.subheader("Output")
                 st.write(output)

@@ -1,12 +1,12 @@
 import os
 import re
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()
+# load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def translate_structured_text(text: str, target_language: str = "French") -> str:
+def translate_structured_text(text: str, target_language: str = "French", api_key=None) -> str:
     """
     Translates a structured article into `target_language`, preserving
     the English labels (e.g. "Title:", "Key Ideas:", etc.) but translating

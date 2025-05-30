@@ -1,11 +1,11 @@
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()
+# load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def summarize_text_narrative(text, word_limit=200):
+def summarize_text_narrative(text, word_limit=200, api_key=None):
     if not text.strip():
         return ""
     response = client.chat.completions.create(
@@ -27,7 +27,7 @@ def summarize_text_narrative(text, word_limit=200):
     )
     return response.choices[0].message.content.strip()
 
-def translate(text, language="Spanish"):
+def translate(text, language="Spanish", api_key=None):
     if not text.strip():
         return ""
     response = client.chat.completions.create(
@@ -49,7 +49,7 @@ def translate(text, language="Spanish"):
     )
     return response.choices[0].message.content.strip()
 
-def summarize_and_translate(text, word_limit=200, language="english"):
+def summarize_and_translate(text, word_limit=200, language="english", api_key=None):
     summary = summarize_text_narrative(text, word_limit=word_limit)
     if language.lower() != "english":
         summary = translate(summary, language)
