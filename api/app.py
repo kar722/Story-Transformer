@@ -16,13 +16,8 @@ from scripts.extract import extract_article
 
 
 def sanitize_line(text):
-    text = text.replace('\u2019', "'")
-    text = text.replace('\u201C', '"')
-    text = text.replace('\u201D', '"')
-    text = text.replace('\u2018', "'")
-    text = text.replace('\u2013', '-')
-    text = text.replace('\u2014', '--')
-    
+    text = text.replace('\u2019', "'").replace('\u201C', '"').replace('\u201D', '"')
+    text = text.replace('\u2018', "'").replace('\u2013', '-').replace('\u2014', '--')
     text = ''.join(c for c in text if unicodedata.category(c)[0] != "C")
     text = text.replace('\u00A0', ' ')
     text = re.sub(r'(\S{25,})', lambda m: ' '.join([m.group(1)[i:i+25] for i in range(0, len(m.group(1)), 25)]), text)
@@ -33,7 +28,6 @@ def create_pdf(text):
     class PDF(FPDF):
         def header(self):
             pass
-        
         def footer(self):
             pass
 
@@ -41,48 +35,38 @@ def create_pdf(text):
     pdf.set_margins(20, 20, 20)
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=20)
-    
     pdf.set_font("Helvetica", size=10)
-    
-    text = text.replace('\u2019', "'").replace('\u201C', '"').replace('\u201D', '"')
-    text = text.replace('\u2018', "'").replace('\u2013', '-').replace('\u2014', '--')
-    text = ''.join(c for c in text if ord(c) < 256)
-    
+
+    text = sanitize_line(text)
     paragraphs = text.split('\n')
-    
+
     for paragraph in paragraphs:
         if not paragraph.strip():
             pdf.ln(5)
             continue
-            
         words = paragraph.split()
         line = ""
-        
         for word in words:
             if len(word) > 30:
                 word = word[:30] + "..."
-                
             test_line = line + " " + word if line else word
-            
-            if pdf.get_string_width(test_line) > (pdf.w - 2*pdf.l_margin - 10):
+            if pdf.get_string_width(test_line) > (pdf.w - 2 * pdf.l_margin - 10):
                 if line:
                     try:
                         pdf.cell(0, 5, line, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
                     except Exception as e:
-                        print(f"Error writing line: {str(e)}")
+                        print(f"Error writing line: {e}")
                     line = word
                 else:
-                    print(f"Skipping too long word: {word}")
                     continue
             else:
                 line = test_line
-                
         if line:
             try:
                 pdf.cell(0, 5, line, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
                 pdf.ln(3)
             except Exception as e:
-                print(f"Error writing final line: {str(e)}")
+                print(f"Error writing final line: {e}")
 
     pdf_output = BytesIO()
     try:
@@ -90,34 +74,32 @@ def create_pdf(text):
         pdf_output.seek(0)
         return pdf_output
     except Exception as e:
-        print(f"PDF generation failed: {str(e)}")
-        simple_pdf = FPDF()
-        simple_pdf.add_page()
-        simple_pdf.set_font("Helvetica", size=12)
-        simple_pdf.cell(0, 10, "PDF generation failed due to text encoding issues.")
-        simple_pdf.ln()
-        simple_pdf.cell(0, 10, "Please try again with different text content.")
+        print(f"PDF generation failed: {e}")
+        fallback = FPDF()
+        fallback.add_page()
+        fallback.set_font("Helvetica", size=12)
+        fallback.cell(0, 10, "PDF generation failed.")
         fallback_output = BytesIO()
-        simple_pdf.output(fallback_output)
+        fallback.output(fallback_output)
         fallback_output.seek(0)
         return fallback_output
 
-logo_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "assets", "logo.png"))
 
-logo = Image.open(logo_path)
-st.image(logo)
+logo_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "assets", "logo.png"))
+if os.path.exists(logo_path):
+    logo = Image.open(logo_path)
+    st.image(logo)
 
 st.title("Story Transformer")
 
-st.sidebar.title("🔑 API Access")
-user_api_key = st.sidebar.text_input("Enter your OpenAI API Key:", type="password")
+st.sidebar.subheader("🔑 API Access")
+api_key = st.sidebar.text_input("Enter your OpenAI API Key:", type="password")
 
-if not user_api_key:
+if not api_key:
     st.warning("Please enter your OpenAI API key in the sidebar to continue.")
     st.stop()
 
 mode = st.radio("Choose what you'd like to do:", ["Summarize", "Translate"])
-
 tab1, tab2 = st.tabs(["Upload .txt", "Enter Article URL"])
 
 
@@ -138,9 +120,9 @@ def summary_controls(key_suffix):
     lang = language_selector(key_suffix)
     return word_limit, lang
 
+
 with tab1:
     uploaded_file = st.file_uploader("Upload an article", type=["txt"])
-
     if uploaded_file is not None:
         article_text = uploaded_file.read().decode("utf-8")
 
@@ -156,9 +138,9 @@ with tab1:
             with st.spinner(f"{mode}ing..."):
                 try:
                     if mode == "Summarize":
-                        output = summarize_and_translate(article_text, word_limit, language, api_key=user_api_key)
+                        output = summarize_and_translate(article_text, word_limit, language, api_key=api_key)
                     else:
-                        output = translate_structured_text(article_text, language, api_key=user_api_key)
+                        output = translate_structured_text(article_text, language, api_key=api_key)
 
                     st.subheader("Output")
                     st.write(output)
@@ -192,9 +174,9 @@ with tab2:
                 st.text_area("Extracted Text", article_text, height=400)
 
                 if mode == "Summarize":
-                    output = summarize_and_translate(article_text, word_limit, language, api_key=user_api_key)
+                    output = summarize_and_translate(article_text, word_limit, language, api_key=api_key)
                 else:
-                    output = translate_structured_text(article_text, language, api_key=user_api_key)
+                    output = translate_structured_text(article_text, language, api_key=api_key)
 
                 st.subheader("Output")
                 st.write(output)
